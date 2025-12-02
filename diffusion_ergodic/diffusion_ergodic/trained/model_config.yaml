@@ -1,0 +1,90 @@
+batch_size: 16
+beta_max: 20.0
+beta_min: 0.1
+constraints:
+  apply_boundary: true
+  apply_during_inference: true
+  apply_during_training: false
+  apply_feasibility: true
+  apply_smoothness: true
+  default_constraint_strength: 0.5
+  delta_t: 0.1
+  feasibility_weight: 0.1
+  max_acceleration: 2.0
+  max_position:
+  - 3.5
+  - 3.5
+  max_velocity: 1.0
+  min_position:
+  - 0.0
+  - -1.0
+  smoothness_weight: 0.1
+data:
+  data_dir: data/ergodic_dataset
+  distribution_dim: &id001
+  - 32
+  - 32
+  num_workers: 4
+  robot_state_dim: 4
+  seed: 42
+  shuffle_dataset: true
+  trajectory_len: 100
+  validation_split: 0.1
+data_dir: data/ergodic_dataset
+decoder_depth: 6
+decoder_drop_path_rate: 0.1
+device: cuda
+diffusion:
+  beta_max: 20.0
+  beta_min: 0.1
+  model_type: x_start
+  start_point_coef: 10.0
+  steps: 20
+diffusion_model_type: x_start
+diffusion_steps: 20
+distribution_dim: *id001
+encoder_depth: 3
+encoder_drop_path_rate: 0.1
+hidden_dim: 384
+learning_rate: 1.0e-05
+model:
+  decoder_depth: 6
+  decoder_drop_path_rate: 0.1
+  encoder_depth: 3
+  encoder_drop_path_rate: 0.1
+  hidden_dim: 384
+  num_heads: 6
+normalizer:
+  robot_state:
+    mean:
+    - 0.5
+    - 0.5
+    - 0.0
+    - 0.0
+    std:
+    - 0.5
+    - 0.5
+    - 3.140000104904175
+    - 1.0
+num_epochs: 100
+num_heads: 6
+num_workers: 4
+output_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic_results/
+robot_state_dim: 4
+seed: 42
+shuffle_dataset: true
+start_point_coef: 10.0
+training:
+  batch_size: 16
+  checkpoint_interval: 5
+  device: cuda
+  early_stopping_patience: 15
+  learning_rate: 1.0e-05
+  lr_scheduler: cosine
+  num_epochs: 100
+  output_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic_results/
+  visualization_frequency: 5
+  weight_decay: 1.0e-05
+trajectory_len: 100
+validation_split: 0.1
+weight_decay: 1.0e-05

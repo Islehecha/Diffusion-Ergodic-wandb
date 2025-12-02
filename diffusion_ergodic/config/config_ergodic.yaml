@@ -1,0 +1,65 @@
+data:
+  data_dir: /home/songxy/code/time-optimal-ergodic-search/experiments/bias_search/ergodic_dataset
+  trajectory_len: 101
+  robot_state_dim: 4
+  distribution_dim:
+  - 32
+  - 32
+  validation_split: 0.1
+  shuffle_dataset: true
+  num_workers: 8
+  seed: 42
+model:
+  encoder_depth: 3
+  decoder_depth: 6
+  num_heads: 6
+  hidden_dim: 384
+  encoder_drop_path_rate: 0.1
+  decoder_drop_path_rate: 0.1
+diffusion:
+  model_type: x_start
+  steps: 20
+  beta_min: 0.1
+  beta_max: 20.0
+  start_point_coef: 10.0
+training:
+  batch_size: 64
+  learning_rate: 0.0001
+  lr_scheduler: cosine
+  weight_decay: 1.0e-05
+  # num_epochs: 200
+  checkpoint_interval: 10
+  visualization_frequency: 10
+  device: cuda
+  output_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic_results/
+  early_stopping_patience: 20
+normalizer:
+  robot_state:
+    mean:
+    - 0.09602066432668104
+    - 0.10164837934565213
+    - -0.0030095771346961876
+    - 0.005120252892616918
+    std:
+    - 0.008158811354930413
+    - 0.007616292145981327
+    - 0.01266715019269569
+    - 0.01146238083774857
+constraints:
+  apply_during_training: false
+  apply_during_inference: true
+  max_velocity: 1.0
+  max_acceleration: 2.0
+  delta_t: 0.1
+  min_position:
+  - 0.0
+  - -1.0
+  max_position:
+  - 3.5
+  - 3.5
+  smoothness_weight: 0.1
+  feasibility_weight: 0.1
+  apply_smoothness: true
+  apply_feasibility: true
+  apply_boundary: true
+  default_constraint_strength: 0.5

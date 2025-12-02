@@ -1,0 +1,106 @@
+# ======================================
+# 训练日志 & 输出目录（不进 Git）
+# ======================================
+runs/
+debug_outputs/
+results/
+diffusion_ergodic_results/
+
+# 如果 diffusion_ergodic 里也有这些目录：
+diffusion_ergodic/runs/
+diffusion_ergodic/wandb/
+diffusion_ergodic/trained/
+
+# 顶层 wandb 目录（wandb 默认会创建）
+wandb/
+
+# 单独的训练日志文件
+training_progress.log
+*.log
+
+# 可视化输出 / 图片（非必要结果）
+visualizations/
+output.png
+*.png
+*.jpg
+*.jpeg
+*.pdf
+
+# 其他输出文件
+samples/
+outputs/
+debug_outputs/
+
+# ======================================
+# 模型 / checkpoint（本地 + wandb 管理）
+# ======================================
+
+# 通用的权重文件（建议忽略，以避免误传大模型）
+*.pt
+*.pth
+
+# 若以后真的想保留一个很小的示例权重，可以单独用 `git add path/to/file.pt` 强行加
+
+# ======================================
+# Python 缓存和编译文件
+# ======================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+.pytest_cache/
+
+# ======================================
+# Node.js 依赖
+# ======================================
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ======================================
+# IDE 和编辑器
+# ======================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ======================================
+# 操作系统文件
+# ======================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ======================================
+# 临时文件和备份
+# ======================================
+*.tmp
+*.temp
+*.backup
+*.bak
+
+# ======================================
+# 调试 / 临时标记文件
+# ======================================
+claude
+
+# ======================================
+# 文档文件（你之前说不想纳入版本）
+# ======================================
+AGENTS.md
+Mission_progress.md
+weekly.md
+CLAUDE.md

@@ -1,0 +1,74 @@
+# 简化的扩散遍历模型配置文件
+# 重构后：移除混合训练，简化约束处理
+
+# 数据参数
+data:
+  data_dir: '/home/songxy/code/time-optimal-ergodic-search/experiments/bias_search/ergodic_dataset'
+  trajectory_len: 101  # 新数据集平均/最大步长需统计验证
+  robot_state_dim: 4  # [x, y, theta, v]
+  distribution_dim: [32, 32]
+  validation_split: 0.1
+  shuffle_dataset: true
+  num_workers: 8  # 更高并行度以匹配10万规模数据
+  seed: 42
+
+# 模型参数
+model:
+  encoder_depth: 3
+  decoder_depth: 6
+  num_heads: 6
+  hidden_dim: 384
+  encoder_drop_path_rate: 0.1
+  decoder_drop_path_rate: 0.1
+
+# 扩散模型参数（简化版）
+diffusion:
+  model_type: "x_start"  # 固定使用x_start，移除其他选项
+  steps: 20  # 推理时的采样步数
+  beta_min: 0.1
+  beta_max: 20.0
+  start_point_coef: 10.0  # 简化的起点约束权重
+
+# 训练参数
+training:
+  batch_size: 64            # 更大的批处理以利用数据规模
+  learning_rate: 0.0001     # 提高学习率加速收敛（可配合调度器）
+  lr_scheduler: "cosine"
+  weight_decay: 0.00001
+  num_epochs: 200           # 增加训练轮数
+  checkpoint_interval: 10
+  visualization_frequency: 10
+  device: "cuda"
+  output_dir: "/home/songxy/code/Diffusion-Ergodic/diffusion_ergodic_results/"
+  early_stopping_patience: 20
+
+# 数据归一化参数
+normalizer:
+  robot_state:
+    mean: [0.5, 0.5, 0.0, 0.0]
+    std: [0.5, 0.5, 3.14, 1.0]
+
+# 约束处理器配置（独立模块）
+constraints:
+  # 约束应用时机
+  apply_during_training: false  # 训练时不应用约束
+  apply_during_inference: true  # 推理时应用约束
+  
+  # 物理参数
+  max_velocity: 1.0
+  max_acceleration: 2.0
+  delta_t: 0.1
+  min_position: [0.0, -1.0]
+  max_position: [3.5, 3.5]
+  
+  # 约束权重（仅用于后处理）
+  smoothness_weight: 0.1
+  feasibility_weight: 0.1
+  
+  # 约束类型开关
+  apply_smoothness: true
+  apply_feasibility: true
+  apply_boundary: true
+  
+  # 约束强度（推理时可调节）
+  default_constraint_strength: 0.5  # 0.0=无约束, 1.0=完全约束

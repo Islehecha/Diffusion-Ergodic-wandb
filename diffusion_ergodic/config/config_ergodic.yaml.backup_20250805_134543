@@ -1,0 +1,75 @@
+# 简化的扩散遍历模型配置文件
+# 重构后：移除混合训练，简化约束处理
+
+# 数据参数 - 更新为新的大规模数据集
+data:
+  data_dir: '/home/songxy/time-optimal-ergodic-search/experiments/bias_search/ergodic_dataset_ultra'
+  trajectory_len: 4  # 新数据集最大轨迹长度为4步
+  robot_state_dim: 4  # [x, y, theta, v]
+  distribution_dim: [32, 32]
+  validation_split: 0.1
+  shuffle_dataset: true
+  num_workers: 8  # 增加并行度以处理大规模数据
+  seed: 42
+
+# 模型参数
+model:
+  encoder_depth: 3
+  decoder_depth: 6
+  num_heads: 6
+  hidden_dim: 384
+  encoder_drop_path_rate: 0.1
+  decoder_drop_path_rate: 0.1
+
+# 扩散模型参数（简化版）
+diffusion:
+  model_type: "x_start"  # 固定使用x_start，移除其他选项
+  steps: 20  # 推理时的采样步数
+  beta_min: 0.1
+  beta_max: 20.0
+  start_point_coef: 10.0  # 简化的起点约束权重
+
+# 训练参数 - 针对大规模数据集优化
+training:
+  batch_size: 64  # 增加批处理大小以充分利用大数据集
+  learning_rate: 0.0001  # 适当提高学习率以加速收敛
+  lr_scheduler: "cosine"
+  weight_decay: 0.00001
+  num_epochs: 200  # 增加训练轮数以充分利用93K数据
+  checkpoint_interval: 10  # 调整检查点间隔
+  visualization_frequency: 10
+  device: "cuda"
+  output_dir: "/home/songxy/code/Diffusion-Ergodic/diffusion_ergodic_results/"
+  early_stopping_patience: 20  # 增加早停耐心
+
+# 数据归一化参数 - 基于新数据集统计信息更新
+normalizer:
+  robot_state:
+    # 基于新数据集的实际统计: x(mean=0.01, std=1.03), y(mean=-0.01, std=1.02), θ(mean=3.10, std=1.64), v(mean=-0.005, std=0.028)
+    mean: [0.01, -0.01, 3.10, -0.005]
+    std: [1.03, 1.02, 1.64, 0.028]
+
+# 约束处理器配置（独立模块）
+constraints:
+  # 约束应用时机
+  apply_during_training: false  # 训练时不应用约束
+  apply_during_inference: true  # 推理时应用约束
+  
+  # 物理参数
+  max_velocity: 1.0
+  max_acceleration: 2.0
+  delta_t: 0.1
+  min_position: [0.0, -1.0]
+  max_position: [3.5, 3.5]
+  
+  # 约束权重（仅用于后处理）
+  smoothness_weight: 0.1
+  feasibility_weight: 0.1
+  
+  # 约束类型开关
+  apply_smoothness: true
+  apply_feasibility: true
+  apply_boundary: true
+  
+  # 约束强度（推理时可调节）
+  default_constraint_strength: 0.5  # 0.0=无约束, 1.0=完全约束
