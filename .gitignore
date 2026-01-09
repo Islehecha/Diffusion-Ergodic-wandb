@@ -10,6 +10,8 @@ diffusion_ergodic_results/
 diffusion_ergodic/runs/
 diffusion_ergodic/wandb/
 diffusion_ergodic/trained/
+# 暂时先忽略data，等数据采集完再上传
+diffusion_ergodic/data/
 
 # 顶层 wandb 目录（wandb 默认会创建）
 wandb/
