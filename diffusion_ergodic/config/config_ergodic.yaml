@@ -1,5 +1,5 @@
 data:
-  data_dir: /home/songxy/code/time-optimal-ergodic-search/experiments/bias_search/ergodic_dataset
+  data_dir: /home/songxy/code/time-optimal-ergodic-search/experiments/bias_search/ergodic_dataset_wild_full
   trajectory_len: 101
   robot_state_dim: 4
   distribution_dim:
@@ -27,7 +27,7 @@ training:
   learning_rate: 0.0001
   lr_scheduler: cosine
   weight_decay: 1.0e-05
-  # num_epochs: 200
+  num_epochs: 200
   checkpoint_interval: 10
   visualization_frequency: 10
   device: cuda
