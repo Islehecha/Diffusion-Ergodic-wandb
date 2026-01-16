@@ -1,5 +1,6 @@
 data:
-  data_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_dataset_wild_full
+  # data_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_dataset_wild_full
+  data_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_dataset
   trajectory_len: 101
   robot_state_dim: 4
   distribution_dim:
