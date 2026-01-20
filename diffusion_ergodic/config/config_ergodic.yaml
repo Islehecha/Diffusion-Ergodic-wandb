@@ -1,6 +1,6 @@
 data:
   # data_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_dataset_wild_full
-  data_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_dataset
+  data_dir: /home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_diagonal
   trajectory_len: 101
   robot_state_dim: 4
   distribution_dim:
@@ -47,18 +47,31 @@ training:
 #     - 0.007616292145981327
 #     - 0.01266715019269569
 #     - 0.01146238083774857
+# 随机起终点版本
+# normalizer:
+#   robot_state:
+#     mean:
+#     - 1.7497046653843793
+#     - 1.2588520134268815
+#     - 0.0002515735483463165
+#     - -0.0004384798499214335
+#     std:
+#     - 0.8596720822301073
+#     - 1.1080157668641462
+#     - 0.024307093796562367
+#     - 0.022465445314018905
 normalizer:
   robot_state:
-    mean:
-    - 1.7497046653843793
-    - 1.2588520134268815
-    - 0.0002515735483463165
-    - -0.0004384798499214335
-    std:
-    - 0.8596720822301073
-    - 1.1080157668641462
-    - 0.024307093796562367
-    - 0.022465445314018905
+    mean: 
+    - 0.19003993495756463
+    - 3.307100179308407
+    - -0.0052441065664747015
+    - 0.004914201126813881
+    std: 
+    - 0.01844288577609891
+    - 0.02121273067661598
+    - 0.014186052724896597
+    - 0.01697275369310611
 constraints:
   apply_during_training: false
   apply_during_inference: true

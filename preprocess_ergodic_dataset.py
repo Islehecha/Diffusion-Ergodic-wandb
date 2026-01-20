@@ -81,7 +81,7 @@ def save_stats(stats, out_dir='dataset_analysis_v2'):
 
 def main():
     parser = argparse.ArgumentParser(description='Compute normalization stats for ergodic_dataset')
-    parser.add_argument('--data_dir', type=str, default='/home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_dataset_wild_full')
+    parser.add_argument('--data_dir', type=str, default='/home/songxy/code/Diffusion-Ergodic/diffusion_ergodic/data/ergodic_diagonal')
     parser.add_argument('--config', type=str, default='diffusion_ergodic/config/config_ergodic.yaml')
     parser.add_argument('--gamma_filter', type=float, nargs='+', default=None)
     args = parser.parse_args()
